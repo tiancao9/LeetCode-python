@@ -12,31 +12,40 @@ Output: 9.26100
 # convert n to binary, either use bit operation n & 1 << i or bin(n)[2:][i]
 # iterate from 0 to 31
 # for each iteration, x *= x, res *= x if bin[i] == 1
-class Solution {
-public:
-    double myPow(double x, int n) {
+class Solution(object):
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        """
+        flag = 1
+        if n < 0:
+            flag = -1
+            n = n * -1
+        m = bin(n)[2:] # m is a string
+        res = 1
+        p = x
+        while m:
+            if m[-1] == '1':
+                res *= p
+            p *= p
+            m = m[:-1]
+        if flag == -1:
+            res = 1.0 / res
+        return res
+        """
         
-        bool neg;
-        double res = 1;
-        if(n < 0)
-        {
-            n = n * -1;
-            neg = true;
-        }
-        else
-            neg = false;
-   // if int is really latge, will exceed time limit by simple iteration, need to transfer it to binary      
-        for(int i = 0; i <= 31; i++)
-        {
- 
-            if (n & 1 << i)
+        flag = True
+        if n < 0:
+            flag = False
+            n = n * -1
+        res = 1
+        for i in range (32):
+            if n & 1 << i:
                 res *= x;
-            x *= x;
-        }
-        
-        if(neg)
-            res = 1/ res;
-        
-        return res;
-    }
-};
+            x *= x
+        if not flag:
+            res = 1.0 / res
+        return res
